@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>Form Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./form.css">
+</head>
+<body>
+    <div class="main">
+      <form action="" method="POST" class="form" id="form-1">
+        <h3 class="heading">Thành viên đăng ký</h3>
+        <p class="desc">Cùng nhau học lập trình</p>
+    
+        <div class="spacer"></div>
+    
+        <div class="form-group">
+          <label for="fullname" class="form-label">Tên đầy đủ</label>
+          <input id="fullname" name="fullname" type="text" placeholder="VD: Sơn Đặng" class="form-control">
+          <span class="form-message"></span>
+        </div>
+    
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
+          <span class="form-message"></span>
+        </div>
+    
+        <div class="form-group">
+          <label for="password" class="form-label">Mật khẩu</label>
+          <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+          <span class="form-message"></span>
+        </div>
+    
+        <div class="form-group">
+          <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+          <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+          <span class="form-message"></span>
+        </div>
+        
+        <div class="form-group">
+          <label for="avatar" class="form-label">Chon anh dai dien</label>
+          <input id="avatar" name="avatar" type="file" class="form-control">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="province" class="form-label"></label>
+          <select id="province" name="province" class="form-control">
+            <option value="">Chon Tinh/TP</option>
+            <option value="HN">Ha Noi</option>
+            <option value="HCM">Ho Chi Minh</option>
+          </select>
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password_confirmation" class="form-label">Chon gioi tinh</label>
+          <input type="radio" id="male" name="gender" value="Nam">
+          <label for="male" class="form-label">Nam</label>
+          <input type="radio" id="female" name="gender" value="Nu">
+          <label for="female" class="form-label">Nu</label>
+          <input type="radio" id="other" name="gender" value="Khac">
+          <label for="other" class="form-label">Khac</label>
+          <span class="form-message"></span>
+        </div>
+        <button class="form-submit">Đăng ký</button>
+      </form>
+    </div>
+    <script src="./validator.js"></script>
+    <script>
+        Validator({
+            form: '#form-1',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+              Validator.isRequired('#fullname'),
+              Validator.isRequired('#email'),
+              Validator.isEmail('#email'),
+              Validator.isRequired('#password'),
+              Validator.minLength('#password', 6),
+              Validator.isRequired('input[name="gender"]'),
+              Validator.isRequired('#avatar'),
+              Validator.isRequired('#province'),
+              Validator.isRequired('#password_confirmation'),
+              Validator.isConfirmed('#password_confirmation', function () {
+                return document.querySelector('#form-1 #password').value;
+              }, 'Mat khau nhap lai khong chinh xac')
+            ],
+            onSubmit: function (data) {
+              console.log(data);
+            }
+          })
+    </script>
+</body>
+</html>
